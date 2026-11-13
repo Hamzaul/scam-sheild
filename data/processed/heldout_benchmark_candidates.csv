@@ -1,0 +1,147 @@
+message_id,message,language,label,scam_category,source,difficulty,template_id,original_label,label_status,language_status,source_quality,auto_signals,review_hint,source_id
+MSG005191,"क्या आपको जानना है कि आपका मोबाइल असली है?
+जानने के लिए संचार साथी डाउनलोड करें
+Android: https://bit.ly/3ZR4H3P
+iOS: https://apple.co/4554aik
+दूरसंचार विभाग
+Need to check if your mobile is genuine? Download Sanchar Saathi to check: Android: https://play.google.com/store/apps/details?id=com.dot.app.sancharsaathi iOS: https://apps.apple.com/in/app/sanchar-saathi/id6739700695 Department of Telecom",Hindi,legitimate,none,benchmark_ground_truth,unrated,LEG005190,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077376
+MSG005192,"बैंक अलर्ट Yesterday 11:30 PM
+बधाई हो! आपका मोबाइल नंबर अंतर्राष्ट्रीय लॉटरी ड्रा के लिए चुना गया है। आप जीते हैं: ₹7,50,000 (सात लाख पचास हजार)। 24 घंटों के भीतर संपर्क करें और प्रोसेसिंग शुल्क जमा करें।
+वेबसाइट: lottery-dept-india-gov.in/claim
+नोट: विलंब की स्थिति में दावा रद्द माना जाएगा",Hindi,scam,LOTTERY_PRIZE,benchmark_ground_truth,unrated,LOTT005191,Lottery / Prize,provisional_scam,declared_and_heuristic_agree,curated_small,prize,,real_077390
+MSG005193,"Unbelievable Offers!! Dial *444# Option 1: Data Deals to buy and check out the latest trends in music, comedy and sermons on https://charts.youtube.com/",English,legitimate,none,benchmark_ground_truth,unrated,LEG005192,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077358
+MSG005194,"Carrefour Fridays month is on!! Crazy deals everyday up to 90% just a click away on the Carrefour app and FREE delivery all month long! Download bit.ly/3nLg5bJ
+
+It's the last day of our anniversary campaign. Get your express orders delivered in 60 mins >>>>
+https://bit.ly/3MQau2A",English,legitimate,none,benchmark_ground_truth,unrated,LEG005193,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077367
+MSG005195,"India Post: Your parcel has arrived at the warehouse but cannot be delivered due to incomplete address information. Please use the link below to confirm your address within 12 hours.
+
+https://bit.ly/3KM4J5k
+
+(Answer ""Y"" and click the link above, or copy the link and open in Safari)
+
+The India Post team wishes you a wonderful day.",English,review,unassigned,benchmark_ground_truth,unrated,REV005194,Legitimate / Benign,needs_review,declared_and_heuristic_agree,curated_small,parcel,source_legit_but_scam_signals,real_077378
+MSG005196,सावधान! आपका बैंक खाता ब्लॉक होने वाला है। तुरंत सत्यापन करें नहीं तो खाता बंद कर दिया जाएगा। लिंक पर क्लिक करें: bit.ly/kyc-hindi-scam,Hindi,scam,KYC,benchmark_ground_truth,unrated,KYC005195,Fake KYC,provisional_scam,declared_and_heuristic_agree,curated_small,imperson,,real_077379
+MSG005197,"Important Notice from Cyber Cell:
+Aapke WhatsApp account se spam messages bheje ja rahe hain. Agar aapne nahi bheja, toh aapka account hack ho sakta hai.
+Turant verification karein aur naya security patch install karein.
+Link: whatsapp-verify-account-now.net/login
+Note: Is link ko ignore karne par account 24 ghante mein block ho jayega.",Hinglish,scam,BANKING,benchmark_ground_truth,unrated,BANK005196,Bank Account Freeze,provisional_scam,declared_and_heuristic_agree,curated_small,"cred,imperson",,real_077384
+MSG005198,"Hi Beta
+Silenced voice call
+Unknown caller
+Cyber cyber crime branch s bat kar rha hu Call me Beta
+Call me",Hinglish,legitimate,none,benchmark_ground_truth,unrated,LEG005197,Legitimate / Benign,source_label,needs_review,curated_small,,,real_077380
+MSG005199,URGENT: आपका पार्सल customs में फंसा है। शुल्क जमा करें वरना वापस भेज दिया जाएगा। Pay now: http://suspicious-domain.xyz/pay,Hindi,review,unassigned,benchmark_ground_truth,unrated,REV005198,Courier Scam,needs_review,declared_and_heuristic_agree,curated_small,,source_fraud_label_without_definition_signals,real_077386
+MSG005200,Your verification code is 482910. Valid for 10 minutes. Do not share this code with anyone.,English,legitimate,none,benchmark_ground_truth,unrated,LEG005199,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077371
+MSG005201,Alert: Aapka bank account block hone wala hai kyunki aapne KYC update nahi kiya hai. Please apna details verify karein varna suvidhayen band kar di jayengi. Link: tinyurl.com/bank-fake-hindi,Hinglish,scam,KYC,benchmark_ground_truth,unrated,KYC005200,Fake KYC,provisional_scam,declared_and_heuristic_agree,curated_small,imperson,,real_077388
+MSG005202,"क्या कोई मोबाइल कनेक्शन के लिए आपके नाम का दुरुपयोग कर रहा है?
+जानने के लिए संचार साथी डाउनलोड करें–
+Android: https://play.google.com/store/apps/details?id=com.dot.app.sancharsaathi
+iOS: https://apps.apple.com/in/app/sanchar-saathi/id6739700695
+दूरसंचार विभाग, भारत सरकार",Hindi,legitimate,none,benchmark_ground_truth,unrated,LEG005201,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077375
+MSG005203,सरकारी चेतावनी: आपके फोन में वायरस पाया गया है। सुरक्षा के लिए तुरंत यह ऐप डाउनलोड करें: security-update-apk.xyz/download.apk,Hindi,scam,OTHER,benchmark_ground_truth,unrated,OTHE005202,General Spam / Telemarketing,provisional_auto,declared_and_heuristic_agree,curated_small,apk,spam_with_scam_signals,real_077383
+MSG005204,"CREDITED: Rs.75 wallet money.
+Use it to order medicines and get FLAT 22% OFF. Code. PHMY22 TC PharmEasy
+https://peasy.in/RjXCN6",English,legitimate,none,benchmark_ground_truth,unrated,LEG005203,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077349
+MSG005205,"Alert: Aapke account se Rs. 45,000 ka loan le liya gaya hai. Agar aapne nahi liya, toh turant cancel karein: loan-cancel-hindi.xyz/refund",Hinglish,review,unassigned,benchmark_ground_truth,unrated,REV005204,Loan Scam,needs_review,declared_and_heuristic_agree,curated_small,,source_fraud_label_without_definition_signals,real_077381
+MSG005206,"वर्तमान रिचार्ज प्लान 07-Jun-26 18:31 Hrs रोजी समाप्त होत आहे!
+Jio नंबर: 7071440202
+प्लान नाव: Rs 299_28D_1.5GB/D
+MyJio वापरून रिचार्ज करा आणि सर्व रिचार्जवर शून्य सुविधा शुल्काचा आनंद घ्या.
+रिचार्ज करण्यासाठी - http://tiny.jio.com/dmyjiorchgpl",Hindi,legitimate,none,benchmark_ground_truth,unrated,LEG005205,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077377
+MSG005207,Amazing DATA deals on your Pulse Plan today! Dial 4062# to enjoy 1.5GB DATA at N500 to browse your favorite websites.,English,legitimate,none,benchmark_ground_truth,unrated,LEG005206,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077363
+MSG005208,Traffic Violation Alert Your vehicle has a speeding violation. Settle dues or appeal via https://echszv.online/in to prevent future traffic-related issues.,English,legitimate,none,benchmark_ground_truth,unrated,LEG005207,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077393
+MSG005209,Badhai ho! Aapko KBC Lottery mein 25 Lakh ka inaam laga hai. Claim code: KBC88. Abhi claim karein: kbc-lottery-winner-claim.net,Hinglish,scam,LOTTERY_PRIZE,benchmark_ground_truth,unrated,LOTT005208,Lottery / Prize,provisional_scam,declared_and_heuristic_agree,curated_small,prize,,real_077389
+MSG005210,"Get Clientele HELP Cover today, DebiCheck and we will cover your premium this December.
+
+Yes=Call, No=Out. AuthFSP.T&C bit.ly/tc_CL.No=OptOut. Afri",English,legitimate,none,benchmark_ground_truth,unrated,LEG005209,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077369
+MSG005211,"Do you like your friend's signature? Reply with '1' to copy your friend's signature.
+Dial 83651# to set Funny Dynamic Signatures and create a lasting impression.
+To stop receiving these messages reply with stop.",English,legitimate,none,benchmark_ground_truth,unrated,LEG005210,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077370
+MSG005212,"Free Msg-J.P. Morgan Chase Bank Alert-Did You Attempt A Zelle Payment For The Amount of $5000.00?
+Reply YES or NO Or 1 To Decline Fraud Alerts
+
+NO",English,legitimate,none,benchmark_ground_truth,unrated,LEG005211,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077392
+MSG005213,"Enjoy more talktime when you recharge your Airtel line! Using your smartcash bank account, you get 100% bonus on every Airtime recharge you do. To activate, dial 939# now or click https://smartcash.onelink.me/Dnai/",English,legitimate,none,benchmark_ground_truth,unrated,LEG005212,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077372
+MSG005214,"महत्वपूर्ण सूचना: भारतीय स्टेट बैंक (SBI) की ओर से।
+आपके खाता संख्या XXXX8976 में संदिग्ध गतिविधि देखी गई है। यदि आपने 15,000 रुपये का लेन-देन नहीं किया है, तो कृपया तुरंत सत्यापन करें। विफलता की स्थिति में खाता स्थगित कर दिया जाएगा।
+सत्यापन लिंक: sbi-kyc-update-verify.xyz/login
+सहायता के लिए कॉल करें: +91-98XXXXXX22",Hindi,scam,KYC,benchmark_ground_truth,unrated,KYC005213,Fake KYC,provisional_scam,declared_and_heuristic_agree,curated_small,cred,,real_077387
+MSG005215,"JAZA POCHI SAA HII!
+SHINDA THAO TANO EVERY HOUR
+PLAY NOW https://aviator254.ke/
+STEPS NI TATU TU JOIN, BECOME THE BIG CRASHER, WIN!
+STOP 45695#",English,legitimate,none,benchmark_ground_truth,unrated,LEG005214,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077356
+MSG005216,Get access to virtual consultations throughout the year at only 1000Ksh with mDaktari on the M-PESA App. Click https://mpesaapp.page.link/mdaktari,English,legitimate,none,benchmark_ground_truth,unrated,LEG005215,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077366
+MSG005217,"Enjoy 2GB+FREE WhatsApp @99 bob valid for 1 day. Dial 54422# to subscribe today!
+
+Special offer just for you! Get 1GB @15 bob valid for 1 hour! Dial 544# and select Amazing data to get this offer!
+
+Buy Amazing data today and Pay via MPESA. Get 200MB +FREE WhatsApp @ just 20 bob valid for 1 day. Dial 544201# to buy!",English,legitimate,none,benchmark_ground_truth,unrated,LEG005216,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077364
+MSG005218,Badhai ho! Aapko 7.5 Lakh ka inaam laga hai. Ye inaam claim karne ke liye turant humare agent ko call karein ya link par click karein: tinyurl.com/lottery-fake,Hinglish,scam,LOTTERY_PRIZE,benchmark_ground_truth,unrated,LOTT005217,Lottery / Prize,provisional_scam,declared_and_heuristic_agree,curated_small,prize,,real_077385
+MSG005219,"Shoe styles paired with minimal looks, perfect for a summer brunch with friends, curated by @piashah_. Shop Pia's curation now. https://a.co/d/23gOxYp",English,legitimate,none,benchmark_ground_truth,unrated,LEG005218,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077350
+MSG005220,Ride & save with 25% off 5 GO or GO Awfar rides up to 20 EGP off valid for a limited time. Use code JN25 https://bit.ly/3F9vuMi,English,legitimate,none,benchmark_ground_truth,unrated,LEG005219,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077352
+MSG005221,"Dear Customer,
+Sell your car at a great price
+
+Get instant payment & free RC transfer
+
+Call: 9999844169
+Or
+Click: bit.ly/3JNjN2i
+-CARS24",English,legitimate,none,benchmark_ground_truth,unrated,LEG005220,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077360
+MSG005222,"Hi Beta
+Call me Please
+Ak bar bat kro mujs
+Aapki help kar rha hu Call me
+Please Beta
+Silenced voice call
+Unknown caller
+Bolo
+Aapk Papa s contact karta hu
+Ok Beta
+Aapko majak lag raha hai yah baat
+Pata chalega aapko yah majak hai real hai
+Call me",Hinglish,review,unassigned,benchmark_ground_truth,unrated,REV005221,General Spam / Telemarketing,needs_review,declared_and_heuristic_agree,curated_small,,spam_or_unclear_likely_promo,real_077374
+MSG005223,"Keep up with MTN Broadband! Visit https://apps.mtn.ng/newsletter/c/mtn-broadband-july-newsletter to read our latest newsletter, ""Owning The Home"".",English,legitimate,none,benchmark_ground_truth,unrated,LEG005222,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077368
+MSG005224,"Kejani Cleaning Services offers comprehensive, reliable cleaning solutions. Their expert team provides routine cleaning, deep cleaning, move-in/out cleaning, post-construction cleaning & more, using top-quality equipment & eco-friendly products. Flexible scheduling & competitive pricing available. Contact them today for a spotless home or office! STOP 45695#",English,legitimate,none,benchmark_ground_truth,unrated,LEG005223,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077361
+MSG005225,"Ramzan Mubarak! Pakistan Day Gala ends 26th March. Hurry up! shop FLAT 23% & 40% OFF before stock runs out. In-stores & online: https://bit.ly/3Yt8PDI T&Cs apply
+To block promotional SMS from the J. Type ""UNSUB"" and send it to 2223623.
+
+Hurry up! Only TWO days left to avail upto 50% OFF on all items at J. Summer Gala Sale, ending on 14th May. In-stores and online at: bit.ly/42P5HoZ T&Cs apply.",Hinglish,review,unassigned,benchmark_ground_truth,unrated,REV005224,General Spam / Telemarketing,needs_review,needs_review,curated_small,,spam_or_unclear_likely_promo,real_077354
+MSG005226,"Elevate your summer style with @signedblake's picks, ready for any summer plans you've got. Shop her curation now, only on The Drop. https://a.co/d/iOPpuac",English,legitimate,none,benchmark_ground_truth,unrated,LEG005225,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077359
+MSG005227,"Hey, little one! Get ready for some incredible savings on Huggies diapers in Shopee! From May 17-31, enjoy two awesome vouchers: 10% OFF (up to P400) with P700 minimum spend, or 12% OFF (up to P800) with P1500 minimum spend. Don't miss this limited-time offer! huggies-ph.com/w2514t
+
+Opt Out? huggies
+
+Hey, little one! Exciting news! Mama and baby are in for some sweet deals! Join us at Edamama Brand Day from June 16-18 only. Huggies and Tiny Buds are joining forces to bring you amazing discounts (35% OFF!) and exclusive FREE gifts. SHOP NOW! huggies-ph.com/093lfh
+
+Opt Out? huggies-ph.com/h3rwtj",English,legitimate,none,benchmark_ground_truth,unrated,LEG005226,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077362
+MSG005228,"Discount of Rs 100 is now YOURS! Get 126 Channels, worth Rs 319 in just Rs 219 on your Airtel Digital TV account 3037252019! Limited Period offer, avail now!",English,legitimate,none,benchmark_ground_truth,unrated,LEG005227,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077351
+MSG005229,"25% Discount - Get Ultra 50GB from MyTelenor App in LOAD of Rs.675 https://telenor.page.link/2JaF To Stop this Promotion, Send Reg to 3627",English,review,unassigned,benchmark_ground_truth,unrated,REV005228,Legitimate / Benign,needs_review,declared_and_heuristic_agree,curated_small,,conflicting_source_labels,real_077373
+MSG005230,URGENT: आपका पार्सल कस्टम्स में फंस गया है। ड्यूटी जमा न करने पर वापस भेज दिया जाएगा। भुगतान करें: indiapost-tracking-update.xyz/pay,Hindi,legitimate,none,benchmark_ground_truth,unrated,LEG005229,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077391
+MSG005231,"Study in UK, USA, Canada, Australia, Malaysia, China, Europe & South Korea
+
+World top ten Univ. offers: MBBS, all type of Engineering & Business related subjects
+
+Service charge free till 20 April'23
+
+Our expert team will support for your admission & Visa processing
+
+01720557119
+01720557126
+01720557134",English,legitimate,none,benchmark_ground_truth,unrated,LEG005230,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077353
+MSG005232,"NEW ARRIVAL - JUNE 23RD
+
+Dresses @ 300; Kondele Branch
+Dresses @ 200; Lolwe Branch
+Dresses @ 100; Kwa Makaa Branch
+
+Save our number 0759885283 to view new outfits on WhatsApp Status.",English,legitimate,none,benchmark_ground_truth,unrated,LEG005231,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077365
+MSG005233,"बैंक अलर्ट Yesterday 11:30 PM
+ऋण विभाग से सूचना: आपने व्यक्तिगत ऋण के लिए आवेदन किया है। ₹2,50,000 की राशि आपके खाते में स्थानांतरित की जाने वाली है। यदि आपने यह आवेदन नहीं किया है तो कृपया तुरंत संपर्क करें और राशि वापस करें।
+संपर्क लिंक: bank-loan-reject-portal.com/help
+सावधानी: अनजान लिंक पर क्लिक करने से बचें केवल आधिकारिक ऐप का उपयोग करें",Hindi,review,unassigned,benchmark_ground_truth,unrated,REV005232,Loan Scam,needs_review,declared_and_heuristic_agree,curated_small,,source_fraud_label_without_definition_signals,real_077382
+MSG005234,Get a SPECIAL DATA DEAL of 2GB for Sh100 valid 24hrs by clicking on https://bit.ly/Safaricomapp or Dial *544*21# and keep the connections going.,English,legitimate,none,benchmark_ground_truth,unrated,LEG005233,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077355
+MSG005235,RAILWAY FURNISHERS*Don't Laybuy It - Railway IT! Open your 24 month account and get your goods upon approval. NO interest! Visit a branch TODAY! STOP2OPTOUT,English,legitimate,none,benchmark_ground_truth,unrated,LEG005234,Legitimate / Benign,source_label,declared_and_heuristic_agree,curated_small,,,real_077357
