@@ -1,43 +1,41 @@
-# Dataset sources and status (v2)
+# Dataset sources and status
 
-## Files received so far
-| File(s) | What it is | Used? |
-|---|---|---|
-| `SMSSpamCollection`, `SMSSpamCollection_1` | identical (same md5) UCI SMS Spam Collection | yes (once) |
-| `data.json`, `data_1.json`, `hinglish_scam.json`, `hinglish_scam_text_data.json` | **four identical copies** of the "Hinglish" file; ~96% of it is verbatim UCI text; 87 unique new rows | yes (once) |
-| `indian_scam_synthetic.csv`, `indian_scam_synthetic_1.csv` | **identical 15-byte error file ("Entry not found")** — Dataset D is still missing | no |
-| `train.jsonl`, `val.jsonl`, `test.jsonl` | a pre-merged third-party bundle, 85,680 rows, 7 source datasets, with `is_scam`, `head2_scam_intent`, language | yes, **with re-labelling** (below) |
-| `phishing_messages.csv`, `phishing_campaigns.csv` | unlabelled European casino/betting/phishing SMS. In `phishing_messages.csv` the message text sits in the `destination number` column (headers shifted). | **no** — no labels, not Indian, nearly no overlap with the bundle |
-
-Dataset D: all copies you uploaded are the same error page. Download the CSV from the Hugging Face page (*Files and versions*) and save it as
-`data/raw/public_datasets/indian_scam_sms_synthetic_audited.csv`; the loader is already in the script. Dataset B (IEEE Hindi) is still not obtained.
-
-## What the bundle (`*.jsonl`) contains — and why we did not trust its labels
-| bundle source | rows | observed quality | our `source_quality` |
+## Files received and what they contained
+| File | Rows | Genuinely new | Notes |
 |---|---|---|---|
-| Smishing_Dataset | 69,418 | real SMS, but **lemmatised/digit-masked** ("have be block", "XX"), some mojibake; contains 1,564 UCI texts | preprocessed_lemmatized |
-| UCI_SMS_Spam | 5,154 | duplicate of file A | raw |
-| Kaggle_Hindi_Merged | 4,567 | Devanagari text that looks **machine-translated from UCI** (e.g. "2006 FIFA वर्ल्ड कप", "एक पाउंड के इनाम"); 4,474 legit / 93 scam | machine_translated |
-| Synthetic_Tier_C | 3,720 | synthetic Hindi/Hinglish | synthetic |
-| Indian_Telecom_SMS | 2,033 | real-looking mixed content incl. personal chat and trading chatter | raw_mixed |
-| ysangam/Indian_Cyber_Scam_Hinglish | 743 | highly templated "Police se bol raha hoon…" scripts | templated |
-| Benchmark_Ground_Truth | 45 | small curated set (Hindi/Hinglish/English) | curated_small |
+| `SMSSpamCollection`, `SMSSpamCollection_1` | 5,574 | - | identical copies (UCI) |
+| `data.json`, `data_1.json`, `hinglish_scam.json`, `hinglish_scam_text_data.json`, **`data_e363b4.json`** | 3,787 | 87 | all identical; ~96% is verbatim UCI text |
+| `train/val/test.jsonl` | 85,680 | most | third-party bundle of 7 sources (see below) |
+| **`synthetic_audited.csv`** (= Dataset D, HF `bhavya2910/...`) | 1,580 | **1,580** | LLM-generated (Gemini, gpt-oss); 0 exact or near-duplicate overlap with existing data; 1,350 rows never reviewed even by the audit |
+| **`hindi_sms_spam_ham_15000.csv`** | 15,000 | **60** | only 60 unique messages after digit masking (31 spam / 29 ham): ~130 repeats of each LLM-style template; ham is short chat (avg 40 chars), spam long (73) - a length shortcut |
+| `phishing_messages.csv`, `phishing_campaigns.csv` | - | 0 | unlabelled European casino/betting SMS; not merged |
+| `indian_scam_synthetic*.csv` (earlier) | 15 bytes | - | an "Entry not found" error page; superseded by `synthetic_audited.csv` |
 
-Problems found:
-1. **`is_scam=1` includes 24,312 "General Spam / Telemarketing" rows.** Same issue as UCI. Not mapped to scam.
-2. **`head2_scam_intent` is noisy.** "UPI Fraud" includes plain cashback/retail promos (PVR, Freecharge, Shoppers Stop); digital-arrest scripts are labelled "General Spam"; the "Legitimate" class contains fake USPS / India Post / AnPost parcel links and a crypto-group lure; the benchmark labels the fake India Post parcel link "Legitimate".
-3. **The bundle's own splits leak.** Measured on a 2,000-row sample of its Smishing test rows: 21.6% have a near-duplicate (cosine >= 0.8) in train (13.3% at >= 0.9); 641 normalised texts appear in more than one split, 22 with conflicting labels.
-4. **Language tags are unreliable** (e.g. English parcel scam and English chain letters tagged Hinglish). Rows where the declared tag and our word-list heuristic disagree are marked `language_status=needs_review`.
-5. **Hindi is almost entirely machine-translated and single-class**: after re-labelling, 4,466 Hindi rows are legitimate and 0 are scam; the 137 Hindi scams are synthetic. A model can learn "Hindi => legitimate". Do not train/evaluate Hindi on this alone.
-6. **Provenance/licences are not stated** for Smishing_Dataset, Kaggle_Hindi_Merged, Indian_Telecom_SMS, Synthetic_Tier_C or Benchmark_Ground_Truth. Please supply source URLs and licences before publishing anything derived from them.
+Merged dataset: **81,437** unique messages (79,797 before the last upload + 1,640 new).
 
-## Merge and de-duplication
-Order of priority (first copy wins): UCI raw, Hinglish JSON, bundle (benchmark, ysangam, telecom, synthetic, Kaggle Hindi, Smishing, UCI-in-bundle), then D.
-Exact duplicates are removed after normalisation (case, punctuation, digits): 95,041 -> 79,798 rows. Identical texts with conflicting source classes are kept once as `review`.
+## origin_type (what each source is, observed in the text; provenance documents are still missing)
+| source | rows | origin_type | notes |
+|---|---|---|---|
+| smishing_bundle | 66.7k | real | real SMS but lemmatised / digit-masked, some mojibake |
+| uci_sms_spam (+ uci_in_bundle) | 5.1k | real | English, UK/Singapore, older |
+| indian_telecom_sms | 1.9k | real | mixed real-looking content incl. personal chat |
+| kaggle_hindi_bundle | 4.6k | machine_translated | garbled translations of UCI; 4,425 legitimate, 0 scam |
+| indian_scam_synthetic (D) | 1.6k | synthetic_llm | hi 167, hinglish 639, en 262, bn/mr/te/ta-en 512 (mostly romanised) |
+| synthetic_tier_c | 0.6k | synthetic_llm | synthetic Hindi/Hinglish notices |
+| ysangam_hinglish | 0.7k | templated_synthetic | call-script lines |
+| hindi_15k_templated | 60 | templated_synthetic | the 60 unique templates |
+| hinglish_hf | 87 | hand_written | hand-written Hinglish |
+| benchmark_ground_truth | 45 | curated_benchmark | small curated set; reserved |
 
-## Splitting and leakage
-`template_id` = near-duplicate groups (MinHash-LSH over word 3-shingles, Jaccard >= 0.7). Splits are stratified and grouped by `template_id`:
-- Any group containing the **benchmark** rows is reserved (`data/processed/heldout_benchmark_candidates.csv`) and appears in no split.
-- **Synthetic, machine-translated and templated** rows can only be in train/validation (never test); a group is test-eligible only if all its rows are.
-- The script asserts that no group crosses splits. `label == review` rows are excluded from all splits.
-- **The dev `test.csv` is 99.8% English** (7,180 rows, 360 scams; mostly preprocessed Smishing + UCI). It is a development test only — **not** the independent Indian/Hindi/Hinglish test set. The 45-row benchmark is the only independent Indian-language material we have, and its own labels need review.
+**The Hindi/Hinglish shortage is not solved by these files.** Hindi: 4,916 resolved messages, of which 4,425 are machine-translated chat (legitimate) and only 339 are scam (326 fraud, 13 spam), all synthetic or templated.
+Hinglish: 1,541 resolved (1,020 scam / 521 legitimate), all synthetic, templated or hand-written. There is **no real-world Hindi or Hinglish SMS** in the data. Ordinary Hindi advertising (spam) is almost absent (13 messages).
+
+## Problems in the third-party bundle (unchanged)
+`is_scam` counted promotional spam; fraud categories mixed in cashback ads; the "Legitimate" class contained fake parcel/USPS/India Post/IRS/bank phishing; its own splits leaked (21.6% of its test rows had a near-duplicate in train); language tags were unreliable. Licences/provenance of the bundle sources, D and the Hindi file are **not stated** - verify before publishing.
+
+## De-duplication, cleaning, grouping
+Exact duplicates after normalisation (case, punctuation, digits) are removed (first source wins; identical texts with conflicting source classes -> review). Placeholder / destroyed-text rows are removed (`scripts/cleaning.py`: `null`, empty, all-`?`; emoticons are kept).
+`template_id` = near-duplicate group (MinHash-LSH, Jaccard >= 0.7; **>= 0.5 inside synthetic / templated / translated sources**, because generated variants are looser paraphrases). Always read CSVs with `keep_default_na=False`.
+
+## Partitions (leakage-safe, whole groups only)
+`train`, `validation`, `test` (real/hand-written messages only), `test_hindi` and `test_hinglish` (from Dataset D only - never used to design a rule), `heldout_benchmark_candidates` (45). `finalize_dataset.py` asserts no group is shared between any two partitions.

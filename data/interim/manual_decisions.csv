@@ -1,0 +1,133 @@
+source,source_id,decision,reason,decided_by,category
+benchmark_ground_truth,real_077376,legitimate,Official DoT Sanchar Saathi campaign,claude_read_individually,
+benchmark_ground_truth,real_077390,scam,Lottery + processing fee to claim,claude_read_individually,
+benchmark_ground_truth,real_077358,scam,(policy v2) unsolicited promotional message: Telecom data-deal promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077367,scam,(policy v2) unsolicited promotional message: Carrefour retail promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077378,scam,India Post 'incomplete address' link - PIB Fact Check: fake,claude_read_individually,
+benchmark_ground_truth,real_077379,scam,Fake KYC account-block link (RBI advisory),claude_read_individually,
+benchmark_ground_truth,real_077384,scam,Cyber-cell impersonation + link + install 'patch',claude_read_individually,
+benchmark_ground_truth,real_077380,review,"Chat fragment 'cyber crime branch se bat kar rha hu, call me' - could be digital-arrest lure or a prank; cannot decide",claude_read_individually,
+benchmark_ground_truth,real_077386,scam,Parcel held in customs; pay fee via look-alike domain,claude_read_individually,
+benchmark_ground_truth,real_077371,legitimate,Genuine OTP message with do-not-share,claude_read_individually,
+benchmark_ground_truth,real_077388,scam,Fake KYC account-block link,claude_read_individually,
+benchmark_ground_truth,real_077375,legitimate,Official DoT Sanchar Saathi campaign,claude_read_individually,
+benchmark_ground_truth,real_077383,scam,Fake government virus warning + APK download,claude_read_individually,
+benchmark_ground_truth,real_077349,scam,(policy v2) unsolicited promotional message: PharmEasy promo / wallet credit,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077381,scam,Fake 'loan taken from your account' cancel/refund link,claude_read_individually,
+benchmark_ground_truth,real_077377,legitimate,Jio plan-expiry service notice,claude_read_individually,
+benchmark_ground_truth,real_077363,scam,(policy v2) unsolicited promotional message: Telecom data-deal promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077393,scam,Fake traffic e-challan: 'settle dues' via suspicious .online link,claude_read_individually,
+benchmark_ground_truth,real_077389,scam,KBC lottery claim,claude_read_individually,
+benchmark_ground_truth,real_077369,scam,(policy v2) unsolicited promotional message: Insurance promo with opt-out/T&C,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077370,scam,(policy v2) unsolicited promotional message: Telecom VAS promo with STOP,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077392,review,Bank fraud alert 'Reply YES or NO' - matches real alert format but also a common smishing template; sender unknown,claude_read_individually,
+benchmark_ground_truth,real_077372,scam,(policy v2) unsolicited promotional message: Telecom recharge-bonus promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077387,scam,Fake SBI suspicious-activity verification link,claude_read_individually,
+benchmark_ground_truth,real_077356,scam,"(policy v2) unsolicited promotional message: Betting-game ad (promotional, unwanted but not fraud)",claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077366,scam,(policy v2) unsolicited promotional message: M-PESA app promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077364,scam,(policy v2) unsolicited promotional message: Telecom data promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077385,scam,Prize claim via agent call/link,claude_read_individually,
+benchmark_ground_truth,real_077350,scam,(policy v2) unsolicited promotional message: Retail curation promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077352,scam,(policy v2) unsolicited promotional message: Ride promo code,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077360,scam,(policy v2) unsolicited promotional message: CARS24 service ad,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077374,review,"Chat thread claiming to know 'Papa', 'real not a joke' - possible intimidation scam; cannot decide",claude_read_individually,
+benchmark_ground_truth,real_077368,scam,(policy v2) unsolicited promotional message: Operator newsletter,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077361,scam,(policy v2) unsolicited promotional message: Cleaning-service ad,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077354,scam,(policy v2) unsolicited promotional message: Retail sale with UNSUB opt-out,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077359,scam,(policy v2) unsolicited promotional message: Retail curation promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077362,scam,(policy v2) unsolicited promotional message: Shopee voucher promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077351,scam,(policy v2) unsolicited promotional message: Airtel DTH promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077373,scam,(policy v2) unsolicited promotional message: Telenor promo with opt-out,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077391,scam,Parcel held in customs; pay duty via look-alike domain,claude_read_individually,
+benchmark_ground_truth,real_077353,scam,(policy v2) unsolicited promotional message: Study-abroad consultancy ad (promo; low confidence),claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077365,scam,(policy v2) unsolicited promotional message: Local clothing-shop ad,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077382,scam,Fake loan transfer / reverse-the-amount phishing link,claude_read_individually,
+benchmark_ground_truth,real_077355,scam,(policy v2) unsolicited promotional message: Telecom data promo,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+benchmark_ground_truth,real_077357,scam,(policy v2) unsolicited promotional message: Retail credit promo with opt-out,claude_read_individually (re-mapped under label policy v2),UNSOLICITED_PROMO
+hinglish_hf,hf_55,scam,Lottery claim via phone,claude_read_individually,
+hinglish_hf,hf_116,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_122,scam,Prize + processing fee,claude_read_individually,
+hinglish_hf,hf_232,scam,"Unbranded 'fraudulent activity on your card, call immediately to confirm transactions' callback lure (medium confidence)",claude_read_individually,
+hinglish_hf,hf_266,legitimate,Personal/work message,claude_read_individually,
+hinglish_hf,hf_275,legitimate,Work message,claude_read_individually,
+hinglish_hf,hf_497,legitimate,Order delivered notice,claude_read_individually,
+hinglish_hf,hf_505,scam,Fake Prime charge + cancel-for-refund link,claude_read_individually,
+hinglish_hf,hf_506,review,Genuine-looking OTP plus unusual 'reply YES to block' instruction; cannot decide,claude_read_individually,
+hinglish_hf,hf_520,scam,Password entry on look-alike domain,claude_read_individually,
+hinglish_hf,hf_541,legitimate,Shipping notice,claude_read_individually,
+hinglish_hf,hf_589,scam,Verify bank details via link,claude_read_individually,
+hinglish_hf,hf_612,scam,Fake RBI scheme claim form,claude_read_individually,
+hinglish_hf,hf_666,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_678,scam,Job lure + registration fee via UPI,claude_read_individually,
+hinglish_hf,hf_683,scam,Fake cashback claim link,claude_read_individually,
+hinglish_hf,hf_703,legitimate,Shipping notice,claude_read_individually,
+hinglish_hf,hf_882,scam,Fake SBI KYC link,claude_read_individually,
+hinglish_hf,hf_894,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_895,scam,Tax-refund phishing (submit details on 'portal'),claude_read_individually,
+hinglish_hf,hf_933,legitimate,Work message,claude_read_individually,
+hinglish_hf,hf_943,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_949,scam,Asks for OTP and PIN,claude_read_individually,
+hinglish_hf,hf_957,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_1016,scam,Bill-refund bank-detail phishing,claude_read_individually,
+hinglish_hf,hf_1054,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_1057,scam,Fake tax-refund claim link,claude_read_individually,
+hinglish_hf,hf_1116,scam,Fake LPG subsidy bank-detail update,claude_read_individually,
+hinglish_hf,hf_1150,review,"Loan ad 'no guarantor, no documents, 10 min' - could be predatory ad or fraud; cannot decide",claude_read_individually,
+hinglish_hf,hf_1321,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_1345,legitimate,Flight confirmation,claude_read_individually,
+hinglish_hf,hf_1446,legitimate,UPI receipt,claude_read_individually,
+hinglish_hf,hf_1449,scam,Asks to share OTP,claude_read_individually,
+hinglish_hf,hf_1473,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_1573,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_1607,scam,'Deducted by mistake' refund via look-alike domain,claude_read_individually,
+hinglish_hf,hf_1627,scam,Job lure + pay for starter kit,claude_read_individually,
+hinglish_hf,hf_1653,scam,'Activate credited amount' via (self-described) phishing link,claude_read_individually,
+hinglish_hf,hf_1702,scam,Disconnection threat + payment link,claude_read_individually,
+hinglish_hf,hf_1721,scam,Free loan but pay registration (advance fee),claude_read_individually,
+hinglish_hf,hf_1736,scam,Fake HDFC card-unblock domain,claude_read_individually,
+hinglish_hf,hf_1757,scam,Gold-coin prize + shipping charge,claude_read_individually,
+hinglish_hf,hf_1775,scam,Account-limited login-via-link phishing,claude_read_individually,
+hinglish_hf,hf_1814,scam,Disconnection threat + payment link,claude_read_individually,
+hinglish_hf,hf_1863,scam,Registration fee via UPI for 'free' camp,claude_read_individually,
+hinglish_hf,hf_1866,legitimate,Bill payment confirmation,claude_read_individually,
+hinglish_hf,hf_1920,legitimate,Work message,claude_read_individually,
+hinglish_hf,hf_1972,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_1995,scam,Prize + processing fee,claude_read_individually,
+hinglish_hf,hf_2007,scam,Fake PAN-update link,claude_read_individually,
+hinglish_hf,hf_2046,legitimate,Recharge expiry reminder,claude_read_individually,
+hinglish_hf,hf_2080,scam,PAN suspended + refund link,claude_read_individually,
+hinglish_hf,hf_2114,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_2175,scam,Mailbox-full phishing,claude_read_individually,
+hinglish_hf,hf_2190,legitimate,EMI auto-debit confirmation,claude_read_individually,
+hinglish_hf,hf_2215,scam,Card-use threat with vague 'call toll free' (medium confidence),claude_read_individually,
+hinglish_hf,hf_2266,legitimate,Salary credit alert,claude_read_individually,
+hinglish_hf,hf_2275,scam,OTP for fake lottery,claude_read_individually,
+hinglish_hf,hf_2361,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_2373,legitimate,Aadhaar appointment confirmation (no ask),claude_read_individually,
+hinglish_hf,hf_2375,legitimate,Membership reminder,claude_read_individually,
+hinglish_hf,hf_2382,scam,Guaranteed 5% daily returns,claude_read_individually,
+hinglish_hf,hf_2424,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_2433,legitimate,Work message,claude_read_individually,
+hinglish_hf,hf_2445,scam,Free iPhone claim link,claude_read_individually,
+hinglish_hf,hf_2518,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_2524,legitimate,"IT notice, no action",claude_read_individually,
+hinglish_hf,hf_2566,scam,Generic 'verify now to restore access' phishing,claude_read_individually,
+hinglish_hf,hf_2611,scam,Share OTP with 'support',claude_read_individually,
+hinglish_hf,hf_2835,legitimate,Appointment reminder,claude_read_individually,
+hinglish_hf,hf_2840,scam,Lottery + send money,claude_read_individually,
+hinglish_hf,hf_2875,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_2899,scam,Prize + transaction details demanded,claude_read_individually,
+hinglish_hf,hf_2970,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_2973,scam,Aadhaar-block verify link,claude_read_individually,
+hinglish_hf,hf_3027,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_3093,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_3116,scam,FASTag recharge via look-alike domain,claude_read_individually,
+hinglish_hf,hf_3292,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_3336,scam,Fake SBI KYC domain,claude_read_individually,
+hinglish_hf,hf_3364,legitimate,Work message,claude_read_individually,
+hinglish_hf,hf_3459,scam,Pay redelivery fee via link,claude_read_individually,
+hinglish_hf,hf_3467,scam,Family-emergency money request,claude_read_individually,
+hinglish_hf,hf_3586,scam,Fake Netflix reactivation domain,claude_read_individually,
+hinglish_hf,hf_3631,scam,Police-trouble ransom demand,claude_read_individually,
+hinglish_hf,hf_3682,legitimate,Personal message,claude_read_individually,
+hinglish_hf,hf_3704,legitimate,Personal message,claude_read_individually,

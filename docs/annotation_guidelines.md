@@ -1,59 +1,47 @@
-# Annotation guidelines v0.3
+# Annotation guidelines v0.4 - label policy v2
 
-**Target:** `scam` vs `legitimate`. Unwanted or annoying is **not** the same as fraudulent.
+**Target:** `scam` vs `legitimate`, with `review` for anything uncertain. Unwanted bulk advertising now counts as `scam`; the `scam_category`
+(and the derived `scam_group` = `spam` | `fraud`) keeps ordinary spam distinguishable from financial fraud for later analysis.
 
-## Final-label mapping (applied by `scripts/build_dataset.py`)
-| Source label | Final label | Rule |
-|---|---|---|
-| ham / "Legitimate" | `legitimate` | Only if the text shows **no** scam signal; otherwise `review` (the source's "legitimate" class contains fake parcel/USPS/crypto-group scams). |
-| scam / any fraud category | `scam` | Only if the text **meets the scam definition** (>=1 strong signal, see `scripts/triage_rules.py`); otherwise `review` (e.g. "UPI Fraud" rows that are really cashback ads). Status `provisional_scam`. |
-| spam / telemarketing / unclear | `review` | Unwanted promo is **not** automatically a scam. Becomes provisional `scam` (status `provisional_auto`) only if it clearly meets the definition. |
-| identical text, conflicting source labels | `review` | `conflicting_source_labels` |
+| Original message type | Final label | scam_category (examples) | scam_group |
+|---|---|---|---|
+| Fake KYC / OTP theft | scam | KYC, OTP_CREDENTIAL, BANKING | fraud |
+| UPI / payment fraud | scam | UPI_PAYMENT | fraud |
+| Fake courier / lottery | scam | DELIVERY, LOTTERY_PRIZE | fraud |
+| Unwanted bulk advertising | scam | UNSOLICITED_PROMO | spam |
+| Unsolicited promotional SMS | scam | UNSOLICITED_PROMO | spam |
+| Unwanted bulk job / loan advertisements | scam | BULK_JOB_LOAN_AD | spam |
+| Genuine bank notifications | legitimate | none | none |
+| Genuine OTP messages | legitimate | none | none |
+| Genuine delivery alerts | legitimate | none | none |
+| Normal personal messages | legitimate | none | none |
+| Uncertain messages | review | unassigned | unassigned |
 
-`review` is a temporary state: those rows are excluded from train/validation/test until a human resolves them.
-All `provisional_*` labels are heuristic and must be confirmed. Strong signals: credential/OTP request, advance fee, fake-prize claim,
-organisation impersonation + threat + a way to act, authority "digital arrest" call, emergency-family money request, APK install,
-income-task job lure, parcel-address/fee lure. Genuine OTP messages ("do not share") are deliberately not flagged.
+Other fraud categories used: ADVANCE_FEE, DIGITAL_ARREST, FAMILY_EMERGENCY, MALWARE_APK, JOB_FRAUD, INVESTMENT, LOAN_FRAUD, UTILITY, TOLL_FEE,
+IMPERSONATION, PHISHING, REMOTE_ACCESS, OTHER_FRAUD. `SPAM_CATEGORIES = {UNSOLICITED_PROMO, BULK_JOB_LOAN_AD}`; everything else is fraud.
 
-## Labels
-**scam** — a message intended to deceive the reader into a harmful action, including any of:
-- stealing money (fake fees, "processing/security charge", fake refund, advance-fee, investment/job fraud);
-- obtaining OTPs, PINs, passwords, card/bank/Aadhaar/PAN details;
-- impersonating an organisation or person (bank, KYC, courier, government, electricity board, "your son/relative");
-- tricking the reader into a fraudulent action (click a look-alike link, call a fake "officer", install an app, pay to claim a prize that doesn't exist).
+**This reverses the earlier policy (v1: "an ordinary advertisement is not a scam").** Rows and manual decisions were re-mapped (24 benchmark advertisements went from legitimate to scam).
 
-**legitimate** — genuine personal, transactional, service, or promotional messages that do not attempt fraud. This includes:
-- genuine bank/UPI alerts and OTP messages (even though they contain OTPs and money amounts);
-- delivery, bill, recharge, appointment updates;
-- ordinary advertisements and unsolicited promotions (discounts, offers, subscription marketing) **unless** they lie about something to extract money/data.
+## Decision rules (applied in this order by `scripts/Adjudicate.py`)
+1. **Fraud evidence wins**: credential/OTP request, advance fee, fake prize, impersonation + threat + a way to act, look-alike or brand-hyphen links, APK, income-task lures, utility disconnection threats, authority + pressure ("digital arrest"), ... A link whose host is the brand's *official* domain is not phishing by itself.
+2. **Genuine notification/service/personal messages stay legitimate**: OTP that does not ask you to share it, transaction alert with no link and a toll-free/branch/app channel, order/delivery status, service notice, advisory, personal chat. A bank notice that also threatens disconnection or asks for the code is *not* genuine.
+3. **Promotional / bulk-advert / bulk job-loan content -> scam (spam group)** when the source says spam/unwanted. If the *source* called the message legitimate but the content is promotional, it is **review**: "unsolicited?" cannot be told from the text.
+4. Source says legitimate and nothing contradicts it -> legitimate. Source says spam but the text is not commercial (quotes, news, event notices) -> review.
 
-> Do **not** label a message `scam` just because it looks like spam.
+## Hard cases
+- Genuine-looking bank/KYC notice with only an official domain or branch visit -> legitimate (not phishing), but a mobile-number callback is suspicious.
+- Authority or accusation **alone** ("Police se bol raha hoon...", "criminal complaint register hui hai") is not enough; it needs money, credentials, a coercive consequence (FIR, arrest, freeze) or an instruction to act now.
+- `review` is a temporary state. It is excluded from every train / validation / test split.
 
-## Decision test (apply in order)
-1. Does it ask for an OTP/PIN/password/card or bank details, or tell the reader to hand over a code? -> likely `scam` (unless it is a genuine OTP *delivery* message that says not to share it).
-2. Does it claim a prize/refund/reward that requires a fee, personal details, or a premium-rate call to "claim"? -> `scam`.
-3. Does it impersonate an authority and threaten (block, disconnect, arrest, expire) unless the reader acts through a link/number in the message? -> `scam`.
-4. Is it an advertisement, offer, newsletter, or service notice with no deception? -> `legitimate`.
-5. Cannot tell from the text alone? -> mark `unsure` in `reviewer_notes` (do not force a label).
+## Language, script, origin
+- `language`: English, Hindi (Devanagari), Hinglish (romanised Hindi mixed with English), Other_CodeMixed (Bengali/Marathi/Telugu/Tamil + English, mostly romanised).
+- `script`: Devanagari / Latin / Mixed / Other, measured from the text; `language_detected` is a word-list check kept for audit.
+- `origin_type`: real, hand_written, curated_benchmark, synthetic_llm, templated_synthetic, machine_translated. Only real / hand-written messages may enter the main test split.
 
-## UCI-specific guidance (older UK premium-rate SMS)
-- "You have won £1000 — call 09061…/text to claim" lures -> `scam` (deceptive prize).
-- Ringtone/tone/dating/chat subscription ads that state price and STOP/opt-out terms -> `legitimate` (unwanted promo) **unless** the price/terms are hidden or the offer is fake. Record the borderline ones in notes; they are the main label-noise risk.
-- Adult-chat ads: `legitimate` for this fraud-detection task (we are not building an adult-content filter), noted as `promo`.
+## Status values
+`label_policy` = v2 on every row. `final_method`: manual_read, family_read, family_review, rule_scam, rule_legit, source_label, rule_conflict, unresolved, **human_review** (set when an independent human label is applied). `final_confidence`: high / medium / low.
 
-## Other columns
-- **language:** English; Hindi (Devanagari); Hinglish (romanised Hindi mixed with English); Other_CodeMixed (e.g. Tamil/Telugu/Bengali/Marathi + English).
-- **scam_category:** KYC, BANKING, LOTTERY_PRIZE, DELIVERY, JOB, UTILITY, LOAN, IMPERSONATION, INVESTMENT, OTHER; `none` for legitimate.
-- **difficulty:** easy (obvious cues) / medium / hard (no link or urgency; or a *legitimate* message that looks like a scam, e.g. a real bank alert with an OTP and a link).
-- **label_status** values: `source_label` (label from original dataset), `provisional_auto` (keyword rule; **must be confirmed**), `needs_review` (unresolved; excluded from splits), `synthetic_llm_audited`, `synthetic_unreviewed`, `human_confirmed` (set after review).
-- **language_status** values: `heuristic_unreviewed` (word-list guess; **must be confirmed**), `declared_by_generator_prompt`, `fixed_source_english`, `human_confirmed`.
-
-## review_queue.csv
-`queue_type` = `full_*` (every row of that type is listed) or `sample_*` (a random sample; `stratum_size` = rows in the whole stratum, so
-the fraction of promo vs scam among the sampled rows can be extrapolated). Priority 1 = benchmark rows.
-Fill `reviewer_label` (scam/legitimate/unsure), `reviewer_language`, `reviewer_category`, `reviewer_notes`.
-
-## Review workflow
-1. Open `data/interim/review_queue.csv`; fill `reviewer_label`, `reviewer_language`, `reviewer_category`, `reviewer_notes` (use a native Hindi/Hinglish speaker for language checks).
-2. Double-annotate at least 10-20% of rows with a second annotator; report Cohen's kappa here.
-3. Merge decisions back (set `label_status` / `language_status` to `human_confirmed`) and re-run `scripts/build_dataset.py`.
+## Independent human review (not done yet)
+Sample: `python -m scripts.make_human_review_sample`. Language test sets: `data/interim/test_hindi_blind_review.csv`, `test_hinglish_blind_review.csv`.
+Reviewer fills `reviewer_label` (scam / legitimate / unsure) and, for scams, `reviewer_category`. Then `python -m scripts.collect_human_labels` and
+`python -m scripts.finalize_dataset` apply the human labels as overrides. Score agreement with `python -m scripts.score_human_review` (population-weighted).

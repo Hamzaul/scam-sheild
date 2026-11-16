@@ -13,11 +13,13 @@ from datasketch import MinHash, MinHashLSH
 from sklearn.model_selection import StratifiedGroupKFold
 sys.path.insert(0, str(Path(__file__).parent))
 from triage_rules import signals
+from cleaning import is_placeholder
 
 RAW = Path("data/raw/public_datasets"); BUNDLE = RAW/"bundle_jsonl"
 D_FILE = RAW/"indian_scam_sms_synthetic_audited.csv"
 COLS = ["message_id","message","language","label","scam_category","source","difficulty","template_id","original_label",
-        "label_status","language_status","source_quality","auto_signals","review_hint","source_id"]
+        "label_status","language_status","source_quality","auto_signals","review_hint","source_id","source_kind",
+        "script","language_detected","origin_type"]
 SEED = 42
 TEST_OK_QUALITY = {"raw","raw_mixed","hand_written","preprocessed_lemmatized"}  # real messages only; synthetic, machine-translated, templated -> train/val
 RESERVED_SOURCES = {"benchmark_ground_truth"}            # held out entirely for the independent test set
@@ -30,6 +32,19 @@ HINGLISH_WORDS = set("aapka aapki aapke aapko hai hain nahi nahin karein karo ka
 def detect_language(t):
     if DEV.search(t): return "Hindi"
     return "Hinglish" if sum(w in HINGLISH_WORDS for w in re.findall(r"[a-z]+", t.lower())) >= 2 else "English"
+
+def detect_script(t):
+    """Devanagari / Latin / Mixed (both) / Other (other Indic or no letters)"""
+    dev = len(re.findall(r"[\u0900-\u097F]", t)); lat = len(re.findall(r"[A-Za-z]", t))
+    if dev and lat: return "Mixed"
+    return "Devanagari" if dev else ("Latin" if lat else "Other")
+
+# what each source IS (observed in the text; provenance documents are missing for several): real / hand_written / curated_benchmark /
+# synthetic_llm / machine_translated / templated_synthetic
+ORIGIN = {"uci_sms_spam":"real","uci_in_bundle":"real","smishing_bundle":"real","indian_telecom_sms":"real","hinglish_hf":"hand_written",
+          "benchmark_ground_truth":"curated_benchmark","kaggle_hindi_bundle":"machine_translated","ysangam_hinglish":"templated_synthetic",
+          "synthetic_tier_c":"synthetic_llm","indian_scam_synthetic":"synthetic_llm","hindi_15k_templated":"templated_synthetic"}
+SYNTHETIC_ORIGINS = {"synthetic_llm","templated_synthetic","machine_translated"}
 
 def fix_text(t):  # light mojibake repair only
     return str(t).replace("ÃÂ£","£").replace("Â£","£").strip()
@@ -91,6 +106,14 @@ def load_d():
     assert o.source_kind.notna().all()
     return base(o, "indian_scam_synthetic", "synthetic", "declared_by_generator_prompt")
 
+def load_hindi15k():
+    """hindi_sms_spam_ham_15000.csv: 15,000 rows but only ~60 unique messages (LLM-style templates repeated ~130x, amounts vary).
+    Duplicates are removed by the generic exact-dedupe below; what survives is ~60 templated Devanagari messages."""
+    d = pd.read_csv(RAW/"hindi_sms_spam_ham_15000.csv", keep_default_na=False).rename(columns={"sms":"message"})
+    d["original_label"] = d.label; d["source_kind"] = d.label.map({"ham":"legit","spam":"spam"}); d["language"] = "Hindi"
+    d["scam_category_src"] = "unassigned"; d["source_id"] = [f"hi15k_{i}" for i in range(len(d))]
+    return base(d.drop(columns="label"), "hindi_15k_templated", "templated", "declared_by_file")
+
 # ---------------- label assignment (the mapping table)
 def assign(kind, sig):
     """returns (label, status, hint)"""
@@ -123,9 +146,13 @@ def template_ids(keys, threshold=0.7, perm=64):
 
 def main():
     parts = [load_uci(), load_hinglish_json(), load_bundle()]
+    if (RAW/"hindi_sms_spam_ham_15000.csv").exists(): parts.append(load_hindi15k())
     if D_FILE.exists(): parts.append(load_d())
     else: print(f"NOTE: {D_FILE.name} not found - Dataset D NOT included.")
     df = pd.concat(parts, ignore_index=True)
+    ph = df.message.map(is_placeholder)                      # before fix_text: NaN/'null'/'??????' are not messages
+    print(f"placeholder / destroyed-text rows removed: {int(ph.sum())}  {df[ph].source.value_counts().to_dict()}")
+    df = df[~ph].copy()
     df["message"] = df.message.map(fix_text); n0 = len(df)
     df = df[df.message.str.len() > 0].reset_index(drop=True)
 
@@ -153,66 +180,25 @@ def main():
     df.loc[dis, "language_status"] = "needs_review"
     df.loc[(df.language_status=="bundle_declared") & ~dis, "language_status"] = "declared_and_heuristic_agree"
     df["difficulty"] = "unrated"
+    df["script"] = df.message.map(detect_script)
+    df["language_detected"] = df.message.map(detect_language)
+    df["origin_type"] = df.source.map(ORIGIN)
+    assert df.origin_type.notna().all(), "unknown source - add it to ORIGIN"
+    bad = (df.source == "hindi_15k_templated") & (df.script != "Devanagari")
+    df.loc[df.source == "hindi_15k_templated", "language_status"] = "script_verified_devanagari"
+    df.loc[bad, "language_status"] = "needs_review"
 
     # near-duplicate groups
     df["_grp"] = template_ids(df._k.tolist())
+    syn = df.origin_type.isin(SYNTHETIC_ORIGINS).values
+    g2 = template_ids(df._k[syn].tolist(), threshold=0.5)
+    df.loc[syn, "_grp"] = 10_000_000 + g2                       # looser grouping for generated text (offset keeps ids distinct)
     pref = df.scam_category.map(lambda c: "LEG" if c=="none" else ("REV" if c=="unassigned" else c[:4].upper()))
-    df["template_id"] = [f"{p}{g:06d}" for p,g in zip(pref, df._grp)]
+    df["template_id"] = [f"{p}{g:08d}" for p,g in zip(pref, df._grp)]
     df.insert(0, "message_id", [f"MSG{i+1:06d}" for i in range(len(df))])
     out = df[COLS]; out.to_csv("data/interim/merged_dataset.csv", index=False)
 
-    # ---------- splits
-    reserved_groups = set(df[df.source.isin(RESERVED_SOURCES)]._grp)
-    reserved = df[df._grp.isin(reserved_groups)]
-    reserved[COLS].to_csv("data/processed/heldout_benchmark_candidates.csv", index=False)
-    ok = df[df.label.isin(["scam","legitimate"]) & ~df._grp.isin(reserved_groups)].reset_index(drop=True)
-    grp_ok = ok.groupby("_grp").source_quality.apply(lambda s: set(s) <= TEST_OK_QUALITY)
-    ok["_test_ok"] = ok._grp.map(grp_ok)
-    assign_s = pd.Series(index=ok.index, dtype=object)
-    def split(sub, mapper, n):
-        f = StratifiedGroupKFold(n_splits=n, shuffle=True, random_state=SEED)
-        for k,(_,idx) in enumerate(f.split(sub, (sub.label=="scam").astype(int), sub._grp)): assign_s[sub.index[idx]] = mapper(k)
-    split(ok[ok._test_ok],  lambda k: "train" if k<14 else ("validation" if k<17 else "test"), 20)
-    split(ok[~ok._test_ok], lambda k: "validation" if k==0 else "train", 7)
-    for name in ["train","validation","test"]:
-        p = ok[assign_s==name]; p[COLS].to_csv(f"data/processed/{name}.csv", index=False)
-        print(f"{name:10s} n={len(p):6d} scam%={100*(p.label=='scam').mean():5.1f}  {p.language.value_counts().to_dict()}")
-    S = [set(ok[assign_s==n]._grp) for n in ["train","validation","test"]]
-    assert not (S[0]&S[1] or S[0]&S[2] or S[1]&S[2]), "template leakage!"
-    assert not (set(ok._grp) & reserved_groups), "reserved benchmark leaked into splits"
-    print("leakage check passed: no near-duplicate group shared across splits or with the reserved benchmark")
-
-    # ---------- review queue (prioritised; samples carry stratum size so proportions can be estimated)
-    rng = np.random.RandomState(SEED)
-    def mk(sub, qtype, pri, extra=""):
-        sub = sub.copy(); sub["queue_type"], sub["priority"], sub["stratum_size"] = qtype, pri, len(sub); return sub
-    parts_q = [mk(reserved, "full_benchmark", 1),
-               mk(df[(df.review_hint=="source_legit_but_scam_signals") & ~df._grp.isin(reserved_groups)], "full_legit_with_signals", 2),
-               mk(df[(df.label_status=="provisional_auto") & ~df._grp.isin(reserved_groups)], "full_provisional_auto", 3),
-               mk(df[(df.review_hint=="conflicting_source_labels")], "full_conflict", 2),
-               mk(df[(df.language_status=="needs_review") | (df.language_status=="heuristic_unreviewed")], "full_language_check", 4)]
-    for hint, n, pri in [("spam_or_unclear_likely_promo",500,5), ("source_fraud_label_without_definition_signals",400,5)]:
-        pool = df[(df.review_hint==hint)]; take = pool.sample(min(n,len(pool)), random_state=SEED)
-        parts_q.append(mk(take, f"sample_{hint}", pri).assign(stratum_size=len(pool)))
-    q = pd.concat(parts_q).drop_duplicates("message_id")
-    q = q[["message_id","message","source","label","language","auto_signals","review_hint","original_label","queue_type","priority","stratum_size"]]
-    q = q.rename(columns={"label":"current_label","language":"current_language"}).sort_values(["priority","queue_type"])
-    for c in ["reviewer_label","reviewer_language","reviewer_category","reviewer_notes"]: q[c] = ""
-    q.to_csv("data/interim/review_queue.csv", index=False)
-    print("review queue:", q.queue_type.value_counts().to_dict())
-
-    # ---------- audit report
-    usable = out[out.label.isin(["scam","legitimate"])]
-    rep = ["# Dataset audit report (auto-generated by scripts/build_dataset.py)\n",
-        f"Rows: **{len(out)}** after exact dedupe (from {n0}). Resolved labels (scam/legitimate): **{len(usable)}**. `review`: **{(out.label=='review').sum()}**.\n",
-        "## Label x label_status\n", pd.crosstab(out.label, out.label_status).to_markdown(), "\n",
-        "## Source x label\n", pd.crosstab(out.source, out.label, margins=True).to_markdown(), "\n",
-        "## Language x label (all rows)\n", pd.crosstab(out.language, out.label, margins=True).to_markdown(), "\n",
-        "## Language x label (resolved rows only)\n", pd.crosstab(usable.language, usable.label, margins=True).to_markdown(), "\n",
-        "## Language status\n", out.language_status.value_counts().to_markdown(), "\n",
-        "## review_hint\n", out[out.review_hint!=""].review_hint.value_counts().to_markdown(), "\n",
-        "## Source quality x language (resolved rows)\n", pd.crosstab(usable.source_quality, usable.language).to_markdown(), "\n"]
-    Path("docs/audit_report.md").write_text("\n".join(rep), encoding="utf-8")
+    print(f"merged_dataset.csv written: {len(out)} rows; origin_type: {out.origin_type.value_counts().to_dict()}")
 
 if __name__ == "__main__":
     main()
